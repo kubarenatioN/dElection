@@ -19,9 +19,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "paths": {
-      "@/src/*": ["./src/*"],
-    }
+    "downlevelIteration": true
   },
-  "include": ["src", "global.d.ts"]
+  "include": ["src"]
 }

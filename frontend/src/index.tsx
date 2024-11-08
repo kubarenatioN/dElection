@@ -9,6 +9,9 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import Election from './components/Election/Election';
+import { CssBaseline } from '@mui/material';
+import { Web3Context } from './context/web3';
+import { Web3Provider } from './providers/web3.provider';
 
 const router = createBrowserRouter([
   {
@@ -33,7 +36,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Web3Provider>
+      <CssBaseline />
+      <RouterProvider router={router} />
+    </Web3Provider>
   </React.StrictMode>
 );
 
