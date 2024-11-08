@@ -1,17 +1,29 @@
 import { FC, useContext, useEffect } from 'react'
 import { Web3Context } from '../../context/web3'
 import { Stack } from '@mui/material';
+import { IParty } from '../../models/party.model';
 
 interface PartiesProps {
-  parties: { id: number; name: string }[];
+  parties: IParty[];
 }
 
-const Parties: FC<PartiesProps> = ({parties}) => {
+const Parties: FC<PartiesProps> = ({parties}) => {  
   return <Stack useFlexGap gap={1}>
     {parties.map((p) => {
-      return <div key={p.id} style={{
-        border: '1px solid #ccc',
-      }}>#{p.id} – {p.name}</div>
+      return <Stack key={Number(p.id)} direction={'row'} 
+        sx={{
+          border: '1px solid #ccc',
+          justifyContent: 'space-between',
+          py: 1,
+          px: 2
+        }}>
+        <span>
+          #{Number(p.id)} – {p.name}
+        </span>
+        <span>
+          Votes: {p.votes}
+        </span>
+      </Stack>
     })}
   </Stack>
 }

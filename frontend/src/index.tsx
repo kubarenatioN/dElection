@@ -10,8 +10,9 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import Election from './components/Election/Election';
 import { CssBaseline } from '@mui/material';
-import { Web3Context } from './context/web3';
 import { Web3Provider } from './providers/web3.provider';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,7 @@ root.render(
     <Web3Provider>
       <CssBaseline />
       <RouterProvider router={router} />
+      <ToastContainer position={'top-center'} />
     </Web3Provider>
   </React.StrictMode>
 );

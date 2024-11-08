@@ -59,6 +59,10 @@ contract Election {
     return true;
   }
 
+  // function getAllParties() public view {
+    
+  // }
+
   function vote(string calldata _partyName) public returns(bool success) {
     uint id = partyId[_partyName];
     if (id == 0) {
