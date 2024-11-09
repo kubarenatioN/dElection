@@ -7,11 +7,15 @@ import Parties from '../Parties/Parties';
 import { IParty } from '../../models/party.model';
 import Vote from '../Vote/Vote';
 import { toast, useToast } from 'react-toastify';
+import { JsonRpcSigner } from 'ethers';
 
 interface ElectionProps {}
 
 const Election: FC<ElectionProps> = () => {
   const [parties, setParties] = useState<IParty[]>([]);
+  const [loadingVote, setLoadingVote] = useState(false);
+  const [vote, setVote] = useState<{party: string} | undefined | null>(undefined)
+
   const web3 = useContext(Web3Context);
 
   const onRegister = useCallback((name: string, id: number) => {
@@ -45,19 +49,24 @@ const Election: FC<ElectionProps> = () => {
     }
 
     const election = getElection(web3.signer);
+    setLoadingVote(true);
 
     try {
       const partyName = await election.parties(partyId);
+
+      const tx = await election.vote(partyName);
+      console.log('tx:', tx);
 
       election.once('Voted', (voter: string, partyId: BigInt, event: any) => {
         console.log('voted', voter, partyId);
         toast(`You voted for ${partyName}`, {
           type: 'success'
         })
+        setVote({
+          party: partyName
+        });
+        setLoadingVote(false);
       })
-
-      const tx = await election.vote(partyName);
-      console.log('tx:', tx);
     } catch (error: any) {
       console.error('[Election Vote]', error)
       if (typeof error === 'object' && 'reason' in error) {
@@ -65,12 +74,61 @@ const Election: FC<ElectionProps> = () => {
           type: 'error'
         })
       }
+      setLoadingVote(false);
     }
   }, [web3])
+
+  const onUnvote = useCallback(async () => {
+    if (!web3 || !web3.signer || !vote?.party) {
+      return;
+    }
+
+    const election = getElection(web3.signer);
+    setLoadingVote(true);
+
+    try {
+      const tx = await election.unvote();
+
+      election.once('Unvoted', (voter: string, partyId: BigInt, event: any) => {
+        console.log('unvoted', voter, partyId);
+        toast(`You unvoted for ${vote.party}`, {
+          type: 'info'
+        })
+        setVote(null);
+        setLoadingVote(false);
+      })
+    } catch (error: any) {
+      console.error('[Election Unvote]', error)
+      if (typeof error === 'object' && 'reason' in error) {
+        toast(error.reason, {
+          type: 'error'
+        })
+      }
+      setLoadingVote(false);
+    }
+  }, [web3, vote])
+
+  async function getUserVote(signer: JsonRpcSigner) {
+		const election = getElection(signer)
+		const voted = await election.voters(signer)
+		let party = undefined;
+		if (voted > 0) {
+			party = await election.parties(voted)
+		}
+
+		if (party) {
+			setVote({ party })
+		} else {
+      setVote(null);
+    }
+	}
 
   useEffect(() => {
     if (web3) {
       loadParties(web3);
+      if (web3.signer) {
+        getUserVote(web3.signer);
+      }
     }
   }, [web3])
   
@@ -83,8 +141,12 @@ const Election: FC<ElectionProps> = () => {
           <Registration onRegister={onRegister} web3={web3} />
         </Grid2>
 
-        <Grid2 size={4}>
-          <Vote parties={parties} onVote={onVote} />
+        <Grid2 size={6}>
+          {<Vote vote={vote} 
+            parties={parties} 
+            onVote={onVote} 
+            onUnvote={onUnvote}
+            loading={loadingVote} />}
         </Grid2>
 
         <Grid2 size={12}>

@@ -24,9 +24,13 @@ const Header: FC<HeaderProps> = ({}) => {
             <span>dElection</span>
           </Link>
 
-          <SvgIcon component={StarIcon} sx={{
-            fontSize: 32
-          }} />
+          <Link to={'https://github.com/kubarenatioN'}
+            title='GitHub' 
+            target='_blank'>
+            <SvgIcon component={StarIcon} sx={{
+              fontSize: 32
+            }} />
+          </Link>
         </Stack>
       </Container>
     </header>

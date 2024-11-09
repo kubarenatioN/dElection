@@ -13,9 +13,6 @@ code {
 }
 
 a {
+  color: inherit;
   text-decoration: none;
-}
-
-.Container {
-  background-color: red;
 }
