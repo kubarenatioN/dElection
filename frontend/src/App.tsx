@@ -6,7 +6,6 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { BrowserProvider, ethers, Network } from 'ethers';
 import { Web3SetContext } from './context/web3';
 
-
 const Footer = styled('footer')(() => {
   return {
     backgroundColor: '#2b2b2b',

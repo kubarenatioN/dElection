@@ -49,3 +49,6 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+// Deployed contract scan
+// https://sepolia.etherscan.io/address/0xc9849D604F60F707420BE38E430D2F404d9BC6dd

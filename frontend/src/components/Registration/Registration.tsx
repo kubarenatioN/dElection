@@ -29,6 +29,8 @@ const Registration: FC<Props> = ({ onRegister, web3 }) => {
     setLoading(true);
 
     try {
+      const tx = await election.registerParty(party);
+
       election.once('PartyRegistered', (name, owner, id, event) => {
         toast(`Registered ${name} party!`, {
           type: 'success'
@@ -37,15 +39,16 @@ const Registration: FC<Props> = ({ onRegister, web3 }) => {
         onRegister(name, id);
         setLoading(false);
       })
-      const tx = await election.registerParty(party);
       await tx.wait()
     } catch (error: any) {
       console.error('[Election]', error);
-      if (typeof error === 'object' && 'reason' in error) {
-        toast(`${error.reason}`, {
+      if (typeof error === 'object') {
+        const msg = 'reason' in error ? error.reason : error.shortMessage;
+        toast(`${msg}`, {
           type: 'error'
         })
       }
+      setLoading(false);
     } finally {}
 
   }

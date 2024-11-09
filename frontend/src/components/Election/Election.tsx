@@ -69,8 +69,9 @@ const Election: FC<ElectionProps> = () => {
       })
     } catch (error: any) {
       console.error('[Election Vote]', error)
-      if (typeof error === 'object' && 'reason' in error) {
-        toast(error.reason, {
+      if (typeof error === 'object') {
+        const msg = error.reason ? error.reason : 'Transaction error';
+        toast(`${msg}`, {
           type: 'error'
         })
       }
