@@ -134,18 +134,7 @@ function App() {
               style={{
                 textDecoration: 'underline'
               }}>
-              @kubarenation
-            </Link>
-          </span>
-          <span> &bull; </span>
-          <span>
-            <Link to={'https://sepolia.etherscan.io/address/0xc9849D604F60F707420BE38E430D2F404d9BC6dd'}
-              title='Sepolia Etherscan' 
-              target='_blank'
-              style={{
-                textDecoration: 'underline'
-              }}>
-              Contract Etherscan
+              kubarenation
             </Link>
           </span>
         </Container>

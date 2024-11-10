@@ -2,9 +2,10 @@ import { FC, useContext, useEffect, useState } from 'react'
 import logo from '../../logo.svg';
 import './Header.css'
 import { Link } from 'react-router-dom';
-import { Container, Icon, Stack, SvgIcon, Typography } from '@mui/material';
+import { Container, Stack, SvgIcon, Typography } from '@mui/material';
 import { ReactComponent as StarIcon } from '../../icons/github.svg';
 import { Web3Context } from '../../context/web3';
+import { blue } from '@mui/material/colors';
 
 interface HeaderProps {
   
@@ -33,10 +34,26 @@ const Header: FC<HeaderProps> = ({}) => {
           alignItems: 'center',
           py: 0.5
         }}>
-          <Link className='logo' to={'/'}>
-            <img className='logo-img' src={logo} alt="" />
-            <span>dElection</span>
-          </Link>
+          <Stack direction={'row'} sx={{
+            alignItems: 'center',
+            gap: 2
+          }}>
+            <Link className='logo' to={'/'}>
+              <img className='logo-img' src={logo} alt="" />
+              <span>dElection</span>
+            </Link>
+
+            <Link to={'https://sepolia.etherscan.io/address/0xc9849D604F60F707420BE38E430D2F404d9BC6dd'}
+              title='Sepolia Etherscan' 
+              target='_blank'
+              style={{
+                fontSize: 15,
+                fontWeight: 500,
+                color: blue[700]
+              }}>
+              Etherscan
+            </Link>
+          </Stack>
 
           <Stack direction={'row'} sx={{
             alignItems: 'center',
