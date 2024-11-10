@@ -39,8 +39,9 @@ function App() {
         // Connect to the MetaMask EIP-1193 object. This is a standard
         // protocol that allows Ethers access to make all read-only
         // requests through MetaMask.
-        const chainId = 11155111; // sepolia
-        provider = new ethers.BrowserProvider(window.ethereum as any, chainId);
+        // const chainId = 11155111; // sepolia
+        const sepoliaNetwork = new Network('sepolia', '11155111')
+        provider = new ethers.BrowserProvider(window.ethereum as any);
         // const url = 'http://127.0.0.1:8545'
         // provider = new ethers.JsonRpcProvider(url);
         signer = await provider.getSigner();
@@ -114,7 +115,7 @@ function App() {
               Please, switch to the <Link to={'https://sepolia.etherscan.io/'} 
                 style={{
                   textDecoration: 'underline'
-                }}>Sepolia testnet</Link> to proceed. 
+                }}>Sepolia testnet</Link> and reload the page to proceed. 
               Chain ID must be <b>11155111</b>
             </p>
           </Container>)
