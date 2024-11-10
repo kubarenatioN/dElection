@@ -39,7 +39,8 @@ function App() {
         // Connect to the MetaMask EIP-1193 object. This is a standard
         // protocol that allows Ethers access to make all read-only
         // requests through MetaMask.
-        provider = new ethers.BrowserProvider(window.ethereum as any, 'any');
+        const chainId = 11155111; // sepolia
+        provider = new ethers.BrowserProvider(window.ethereum as any, chainId);
         // const url = 'http://127.0.0.1:8545'
         // provider = new ethers.JsonRpcProvider(url);
         signer = await provider.getSigner();
